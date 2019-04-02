@@ -1,0 +1,9 @@
+*.lua
+.tup
+logs/
+lapis
+nginx.conf.compiled
+build/
+static/storage
+secret/
+node_modules/
