@@ -20,25 +20,30 @@ import serial, varchar , text, date, time, integer, double, boolean from types
 
     -- 购物车
     create_table "shop_carts", {
-      { "id", varchar }
-      { "flower_id", serial  }
-      { "user_id", serial }
+      { "id", serial }
+      { "goods_id", integer null: true }
+      { "user_id", integer null: true }
+      { "type", varchar } -- 型号
+      { "num", integer null: true } -- 数量
+      {"created_at", time }
+      {"updated_at", time }
+
       "PRIMARY KEY (id)"
     }
 
     -- 分类
     create_table "categorys", {
-      { "id", varchar }
+      { "id", serial }
       { "name", varchar  }
 
       "PRIMARY KEY (id)"
     }
 
-    create_table "flowers", {
+    create_table "goods", {
       { "id", serial }
       { "title", varchar } -- 标题
       { "desc", varchar } -- 简介
-      { "category_id", serial } -- 分类
+      { "category_id", integer null: true } -- 分类
       { "type", varchar } -- 型号
       { "content", text } -- 内容
       { "price", double } -- 价格
@@ -53,8 +58,8 @@ import serial, varchar , text, date, time, integer, double, boolean from types
       { "title", varchar }
       { "src", varchar }
       { "content", text }
-      { "up", serial }
-      { "view", serial }
+      { "up", integer }
+      { "view", integer }
 
       "PRIMARY KEY (id)"
     }
@@ -63,8 +68,8 @@ import serial, varchar , text, date, time, integer, double, boolean from types
     create_table "coupons", {
       { "id", serial }
       { "price", integer } -- 价格
-      { "user_id", serial null: true }
-      { "subject", serial null: true }
+      { "user_id", integer null: true }
+      { "subject_id", integer null: true }
       { "rule", varchar } -- 使用规则
       { "end_time", date } -- 截止日
       { "used", boolean default: false } -- 是否使用
@@ -72,23 +77,24 @@ import serial, varchar , text, date, time, integer, double, boolean from types
     }
 
     create_table "orders", {
-      { "uid", serial } -- 订单编码
-      { "flower_id", serial }
-      { "user_id", serial }
+      { "uid", varchar } -- 订单编码
+      { "goods_id", integer null: true }
+      { "user_id", integer null: true }
       { "type", varchar } -- 分类
-      { "status", varchar }
+      { "status", varchar } -- 状态
       { "created_at", time }
 
       "PRIMARY KEY (uid)"
     }
 
-    create_table "flower_comments", {
+    create_table "goods_comments", {
       { "id", serial }
-      { "flower_id", serial }
-      { "order_id", serial }
-      { "user_id", serial }
+      { "goods_id", integer null: true }
+      { "order_id", integer null: true }
+      { "user_id", integer null: true }
       { "content", text } -- 评论内容
-      { "level", serial } -- 好评等级
+      { "level", integer } -- 好评等级
+
       "PRIMARY KEY (id)"
     }
 
