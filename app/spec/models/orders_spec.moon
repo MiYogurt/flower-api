@@ -25,30 +25,28 @@ describe "Orders Test #model #model_orders", ->
     before_each ->
         truncate_tables Goods, Users, Orders, GoodsComments
 
-    -- it "get goods", ->
-    --     create_order!
-    --     create_goods!
+    it "get goods", ->
+        create_order!
+        create_goods!
 
-    --     order = Orders\find raw_order
-    --     goods = order\get_goods!
+        order = Orders\find raw_order
+        goods = order\get_goods!
 
-    --     assert.are.same raw_goods, goods
+        assert.are.same raw_goods, goods
 
-    -- it "get user", ->
-    --     create_order!
-    --     create_user!
+    it "get user", ->
+        create_order!
+        create_user!
 
-    --     order = Orders\find raw_order
-    --     user = order\get_user!
+        order = Orders\find raw_order
+        user = order\get_user!
 
-    --     assert.are.same raw_user, user
+        assert.are.same raw_user, user
 
     it "get comment", ->
         create_order!
         create_goods_comment!
         order = Orders\find raw_order
-        comment1 = GoodsComments\find raw_goods_comment
-        assert.is.truthy comment1
         comment = order\get_comment!
         assert.is.truthy comment
         assert.are.same raw_goods_comment, comment
