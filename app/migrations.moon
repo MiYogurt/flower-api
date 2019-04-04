@@ -90,7 +90,7 @@ import serial, varchar , text, date, time, integer, double, boolean from types
     create_table "goods_comments", {
       { "id", serial }
       { "goods_id", integer null: true }
-      { "order_id", integer null: true }
+      { "order_id", varchar null: true }
       { "user_id", integer null: true }
       { "content", text } -- 评论内容
       { "level", integer } -- 好评等级

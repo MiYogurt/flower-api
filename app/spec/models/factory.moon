@@ -28,9 +28,11 @@ raw_coupon = {
     used: false
 }
 
+uid = uuid!
+
 raw_order = {
     user_id: raw_user.id
-    uid: uuid!
+    uid: uid
     type: "紫色"
     goods_id: 1 -- 必须制定，默认值为 0 会导致失败
     status: "paying"
@@ -72,6 +74,15 @@ raw_goods = {
     src: ""
 }
 
+raw_goods_comment = {
+    id: 1,
+    goods_id: 1,
+    order_id: uid,
+    user_id: 1
+    content: "非常好"
+    level: 4
+}
+
 create_user = () ->
     Users\create raw_user
 
@@ -93,6 +104,9 @@ create_category = () ->
 create_goods = () ->
     Goods\create raw_goods
 
+create_goods_comment = () ->
+    GoodsComments\create raw_goods_comment
+
 {
     :raw_coupon
     :raw_order
@@ -101,6 +115,7 @@ create_goods = () ->
     :raw_subject
     :raw_category
     :raw_goods
+    :raw_goods_comment
 
     :create_coupon
     :create_order
@@ -109,4 +124,5 @@ create_goods = () ->
     :create_subject
     :create_category
     :create_goods
+    :create_goods_comment
 }
