@@ -1,9 +1,17 @@
 import use_test_server from require "lapis.spec"
 import request from require "lapis.spec.server"
+import truncate_tables from require "lapis.spec.db"
+
+import Users from require "models"
+
 cjson = require "cjson"
 omit = require "utils.omit"
+
 describe "user application #application", ->
   use_test_server!
+
+  before_each ->
+    truncate_tables Users
   
   it "request /sign_up", ->
     raw_user = {
