@@ -1,7 +1,12 @@
 lapis = require "lapis"
 models = require "models"
+console = require "lapis.console"
+
 
 class extends lapis.Application
+  @include "applications.user"
+
+  "/console": console.make!
   "/": =>
     "Welcome to Lapis #{require "lapis.version"}!"
   "/user": =>
