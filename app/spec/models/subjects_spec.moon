@@ -31,11 +31,6 @@ describe "Subject Test #models #models_subjets", ->
         coupons = subject\get_coupons!
         assert.are.equal 1, #coupons
 
-    it "create coupon", ->
-        create_coupon!
-        coupon = Coupons\find raw_coupon
-        assert.is.truthy coupon
-    
     it "get coupon by reload", -> 
         create_subject!
         create_coupon!
