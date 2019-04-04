@@ -6,8 +6,8 @@ import
 
 json_capture_erros = (fn) ->
     capture_errors {
-            on_error: =>
-                { json: @errors }
+        on_error: =>
+            { json: @errors }
         fn
     }
 
