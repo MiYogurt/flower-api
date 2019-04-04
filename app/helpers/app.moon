@@ -11,12 +11,12 @@ json_capture_erros = (fn) ->
         fn
     }
 
-post = (fn) -> 
+post_method = (fn) -> 
     json_params respond_to {
         POST: fn
     }
 
 {
-    :post
+    :post_method
     :json_capture_erros
 }

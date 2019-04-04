@@ -12,11 +12,11 @@ import assert_valid from require "lapis.validate"
 
 import Users from require "models"
 
-import json_capture_erros, post from require "helpers.app"
+import json_capture_erros, post_method from require "helpers.app"
 
 class UserApplication extends lapis.Application
 
-    [sign_up: "/sign_up"]: post json_capture_erros => 
+    [sign_up: "/sign_up"]: post_method json_capture_erros => 
         assert_valid @params, {
             { "username", exists: true, min_length: 2, max_length: 25 }
             { "email", exists: true, min_length: 2, max_length: 25 }
