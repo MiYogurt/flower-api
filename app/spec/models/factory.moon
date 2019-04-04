@@ -1,6 +1,7 @@
 uuid = require "uuid"
 import Users, 
     Coupons, 
+    Goods,
     GoodsComments, 
     Orders, 
     Categorys,
@@ -60,6 +61,17 @@ raw_subject= {
     view: 1
 }
 
+raw_goods = {
+    id: 1
+    title: "茉莉花"
+    desc: "hello"
+    category_id: 1
+    type: "白色"
+    content: "如何如何的值得购买"
+    price: 99
+    src: ""
+}
+
 create_user = () ->
     Users\create raw_user
 
@@ -78,6 +90,9 @@ create_subject = () ->
 create_category = () ->
     Categorys\create raw_category
 
+create_goods = () ->
+    Goods\create raw_goods
+
 {
     :raw_coupon
     :raw_order
@@ -85,6 +100,7 @@ create_category = () ->
     :raw_shop_cart
     :raw_subject
     :raw_category
+    :raw_goods
 
     :create_coupon
     :create_order
@@ -92,4 +108,5 @@ create_category = () ->
     :create_shop_cart
     :create_subject
     :create_category
+    :create_goods
 }
