@@ -99,6 +99,8 @@ import serial, varchar , text, date, time, integer, double, boolean from types
     }
 
 
+  ["2019年04月05日12:31:28"]: =>
+    add_column "goods", "sum", "integer" -- 商品库存
 
 
 } 
