@@ -16,7 +16,21 @@ post_method = (fn) ->
         POST: fn
     }
 
+delete_method = (fn) -> 
+    json_params respond_to {
+        DELETE: fn
+    }
+    
+put_method = (fn) -> 
+    json_params respond_to {
+        PUT: fn
+    }
+
+
+
 {
     :post_method
     :json_capture_erros
+    :delete_method
+    :put_method
 }
