@@ -5,6 +5,7 @@ import truncate_tables from require "lapis.spec.db"
 import Users from require "models"
 import Model from require "lapis.db.model"
 
+db = require "lapis.db"
 cjson = require "cjson"
 omit = require "utils.omit"
 i = require "inspect"
@@ -49,7 +50,7 @@ describe "sdk application #application #sdk", ->
   it "query users by query api", ->
     for i = 1, 32
         raw_user["id"] = i
-        Model.create Users, raw_user
+        Users\create raw_user
     status, body = request "/sdk/users/query", {
         headers: 
             'content-type': 'application/json'
