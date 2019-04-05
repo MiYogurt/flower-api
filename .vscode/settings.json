@@ -1,7 +1,7 @@
 {
     "files.exclude": {
         "**/*_temp": true,
-        "**/*.lua": true,
+        // "**/*.lua": true,
         "app/logs": true,
         "app/mime.types": true,
         "app/nginx.conf*": true

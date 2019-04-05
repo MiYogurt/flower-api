@@ -1,6 +1,7 @@
 lapis = require "lapis"
 omit = require "utils.omit"
 i = require "inspect"
+db = require "lapis.db"
 
 import
     respond_to
@@ -19,16 +20,22 @@ import json_capture_erros,
     from require "helpers.app"
 import preload from require "lapis.db.model"
 
-query = (name, limit, where, offset, preload) =>
+query = (name, limit, where, page, preload) =>
     limit or= 10
-    offset or= 1
+    page or= 1
     preload or= {}
     model = models[name]
-    data = model\find where db.raw "limit "..limit.." offset "..offset
+    paged = model\paginated where, per_page: limit
+
     if #preload > 0
         preload data preload
     {
-        json: data
+        json: 
+            count: paged\total_items!
+            all: paged\num_pages!
+            limit: limit
+            page: page
+            data: paged\get_page page
     }
 
 create = (name) =>
@@ -54,20 +61,27 @@ delete = (name, id) =>
         }
 
 table_info = (name) =>
-    {
-        json: models[name]\columns!
-    }
+    model = models[name]
+    if model
+        {
+            json: model\columns!
+        }
 
-class SKDApplication extends lapis.Application
+class SDKApplication extends lapis.Application
     [table_info: "/:name/info"]: =>
-        table_info(@params.name)
-    [query: "/:name/query"]: =>
-        query(@params.name, @params.limit, @params.where, @params.offset, @params.preload)
+        print @params.name
+        table_info(@, @params.name)
+
+    [query: "/:name/query"]: post_method =>
+        query(@, @params.name, @params.limit, @params.where, @params.offset, @params.preload)
     
-    [delete: "/:name/:id"]: respond_to {
+    [create: "/:name"]: post_method =>
+        create @, @params.name
+
+    [model: "/:name/:id"]: respond_to {
         DELETE: =>
-            delete(@params.name, @params.id)
+            delete(@, @params.name, @params.id)
         PUT: =>
-            update(@params.name, @params.id)
+            update(@, @params.name, @params.id)
 
     }
