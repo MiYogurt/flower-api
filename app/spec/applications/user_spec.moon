@@ -34,3 +34,5 @@ describe "user application #application", ->
     assert.same omit raw_user, 
         { "password_repeat" },
       omit body, { "id" }
+
+          
