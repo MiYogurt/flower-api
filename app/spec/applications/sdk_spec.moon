@@ -60,3 +60,27 @@ describe "sdk application #application #sdk", ->
 
     assert.same 200, status
     assert.same 4, body["all"]
+  
+  it "update users by put", ->
+    Users\create raw_user
+    raw_user['username'] = "coco"
+    status, body = request "/sdk/users/#{raw_user.id}"
+        headers: 
+            'content-type': 'application/json'
+        expect: "json"
+        method: "PUT"
+        data: cjson.encode raw_user
+    
+    assert.equal 200, status
+    assert.same raw_user, body
+
+  it "delete users by delete", ->
+    Users\create raw_user
+    status, body = request "/sdk/users/#{raw_user.id}"
+      headers: 
+          'content-type': 'application/json'
+      expect: "json"
+      method: "DELETE"
+    
+    assert.equal 200, status
+    assert.is.falsy Users\find raw_user.id

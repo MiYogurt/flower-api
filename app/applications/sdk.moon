@@ -48,8 +48,9 @@ update = (name, id) =>
     model = models[name]
     data = model\find id
     if data
+        data\update omit @params, {"name", "id"}
         {
-            json: data\update omit @params, {"name", "id"}
+            json: data
         }
 
 delete = (name, id) =>
@@ -78,7 +79,7 @@ class SDKApplication extends lapis.Application
     [create: "/:name"]: post_method =>
         create @, @params.name
 
-    [model: "/:name/:id"]: respond_to {
+    [model: "/:name/:id"]: json_params respond_to {
         DELETE: =>
             delete(@, @params.name, @params.id)
         PUT: =>
