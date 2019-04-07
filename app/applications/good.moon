@@ -27,7 +27,7 @@ class GoodsApplication extends lapis.Application
             yield_error "not found"
         GoodsComments\include_in {good}, "goods_id", as: "comments", flip: true, many: true
         GoodsComments\preload_relation good['comments'], "user"
-        
+
         {
             json: good
         }
@@ -39,7 +39,7 @@ class GoodsApplication extends lapis.Application
         }
     
     -- 分类查询接口
-    [by_category: "/category/:id"]: json_params json_capture_erros => 
+    [by_category: "/category/:id"]: post_method json_params json_capture_erros => 
         paged = Goods\paginated [[where category_id = ?]], @params.id, per_page: @params['per_page'] or 10
         ret = nil
         if @params.page != nil
@@ -53,7 +53,6 @@ class GoodsApplication extends lapis.Application
                 all: paged\num_pages!
                 current: @params['page'] or 1
                 per: @params['per_page'] or 10
-                
             }
         }    
 

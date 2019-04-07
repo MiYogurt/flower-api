@@ -38,6 +38,7 @@ describe "user application #application #application_goods", ->
     create_goods!
     create_goods_comment!
     status, body = request "/category/1"
+      method: "POST"
       expect: 'json'
     assert.same 200, status
     assert.truthy #body['data']
