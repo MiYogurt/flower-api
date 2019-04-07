@@ -5,6 +5,7 @@ console = require "lapis.console"
 class extends lapis.Application
   @include "applications.sdk", path: "/sdk", name: "sdk_"
   @include "applications.user"
+  @include "applications.good"
 
   "/console": console.make!
   "/": =>
