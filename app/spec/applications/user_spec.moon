@@ -9,6 +9,8 @@ omit = require "utils.omit"
 
 i = require "inspect"
 
+import to_string from require "utils.jwt"
+
 describe "user application #application #application_user", ->
   use_test_server!
 
@@ -58,3 +60,23 @@ describe "user application #application #application_user", ->
     assert.same 200, status
     assert.truthy body['token']
 
+  it "request /user_info", ->
+    raw_user = {
+        username: "yugo"
+        email: "belovedyogurt@gmail.com"
+        password: "password"
+        phone: "00000000000"
+    }
+
+    Users\create raw_user
+
+    token  = to_string raw_user
+
+    status, body = request "/user_info"
+      headers: 
+        "content-type": "application/json"
+        "x-access-token": token
+      expect: "json"
+
+    assert.equal 200, status
+    assert.same omit(raw_user, {"password"}), body

@@ -15,7 +15,7 @@ import assert_valid from require "lapis.validate"
 
 import Users from require "models"
 
-import json_capture_erros, post_method from require "helpers.app"
+import json_capture_erros, post_method, extract_token from require "helpers.app"
 
 class UserApplication extends lapis.Application
 
@@ -50,5 +50,13 @@ class UserApplication extends lapis.Application
                     token: to_string user
                 }
             }
+
         else 
             yield_error "user not found"
+
+    [user_info: "/user_info"]: extract_token =>
+        user = Users\find @user.id
+
+        {
+            json: omit user, {'password'}
+        }
