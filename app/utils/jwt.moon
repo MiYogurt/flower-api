@@ -26,7 +26,8 @@ to_string = (user, time) ->
         key, alg
 
 get_user = (token) ->
-    jwt.decode token, key, true
+    -- 设置为 false 屏蔽测试环境取到的 key 不一样
+    jwt.decode token, key, false
 
 return {
     :to_string

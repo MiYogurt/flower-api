@@ -32,7 +32,7 @@ put_method = (fn) ->
     }
 
 extract_token = (fn) -> 
-    json_capture_erros {
+    json_capture_erros =>
         token = @req.headers["x-access-token"]
         if token == nil
             yield_error "not found x-access-token"
@@ -41,7 +41,7 @@ extract_token = (fn) ->
             yield_error err
         @user = user
         fn @
-    }
+    
 
 
 {
@@ -49,5 +49,6 @@ extract_token = (fn) ->
     :json_capture_erros
     :delete_method
     :put_method
+
     :extract_token
 }

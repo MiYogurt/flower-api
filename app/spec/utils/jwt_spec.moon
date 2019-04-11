@@ -5,11 +5,11 @@ import
 
 i = require "inspect"
 
+import raw_user from require "spec.models.factory"
+
 describe "jwt module test #jwt", ->
     it "default", ->
-        user = {
-            username: "yugo"
-        }
+        user = raw_user
 
         token, err = to_string user
         
