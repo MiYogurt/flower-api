@@ -11,6 +11,8 @@ i = require "inspect"
 
 import to_string from require "utils.jwt"
 
+import pre_user from require "utils.pre_user"
+
 describe "user application #application #application_user", ->
   use_test_server!
 
@@ -37,12 +39,15 @@ describe "user application #application #application_user", ->
     assert.truthy body['token']
 
   it "request /sign_in", ->
+
     raw_user = {
         username: "yugo"
         email: "belovedyogurt@gmail.com"
         password: "password"
         phone: "00000000000"
     }
+
+    pre_user raw_user
 
     Users\create raw_user
     

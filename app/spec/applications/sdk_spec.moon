@@ -22,7 +22,8 @@ create_user = ->
     request "/sdk/users", {
         method: "POST"
         headers: 
-            'content-type': 'application/json'
+          'content-type': 'application/json'
+          'x-access-token': 'hellojecklly'
         post: cjson.encode raw_user
         expect: "json"
     }
@@ -36,6 +37,8 @@ describe "sdk application #application #sdk", ->
   it "request users table info", ->
     
     status, body = request "/sdk/users/info", {
+        headers:
+          'x-access-token': 'hellojecklly'
         expect: "json"
     }
 
@@ -53,7 +56,8 @@ describe "sdk application #application #sdk", ->
         Users\create raw_user
     status, body = request "/sdk/users/query", {
         headers: 
-            'content-type': 'application/json'
+          'content-type': 'application/json'
+          'x-access-token': 'hellojecklly'
         expect: "json"
         method: "POST"
     }
@@ -66,7 +70,9 @@ describe "sdk application #application #sdk", ->
     raw_user['username'] = "coco"
     status, body = request "/sdk/users/#{raw_user.id}"
         headers: 
-            'content-type': 'application/json'
+          'content-type': 'application/json'
+          'x-access-token': 'hellojecklly'
+
         expect: "json"
         method: "PUT"
         data: cjson.encode raw_user
@@ -78,7 +84,8 @@ describe "sdk application #application #sdk", ->
     Users\create raw_user
     status, body = request "/sdk/users/#{raw_user.id}"
       headers: 
-          'content-type': 'application/json'
+        'content-type': 'application/json'
+        'x-access-token': 'hellojecklly'
       expect: "json"
       method: "DELETE"
     
