@@ -17,6 +17,7 @@ import json_capture_erros,
     post_method,
     delete_method,
     put_method
+    check_admin
     from require "helpers.app"
 import preload from require "lapis.db.model"
 
@@ -69,17 +70,17 @@ table_info = (name) =>
         }
 
 class SDKApplication extends lapis.Application
-    [table_info: "/:name/info"]: =>
+    [table_info: "/:name/info"]: check_admin =>
         print @params.name
         table_info(@, @params.name)
 
-    [query: "/:name/query"]: post_method =>
+    [query: "/:name/query"]: check_admin post_method =>
         query(@, @params.name, @params.limit, @params.where, @params.offset, @params.preload)
     
-    [create: "/:name"]: post_method =>
+    [create: "/:name"]: check_admin post_method =>
         create @, @params.name
 
-    [model: "/:name/:id"]: json_params respond_to {
+    [model: "/:name/:id"]: check_admin json_params respond_to {
         DELETE: =>
             delete(@, @params.name, @params.id)
         PUT: =>

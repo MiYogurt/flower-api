@@ -9,12 +9,24 @@ import
     get_user
     from require "utils.jwt"
 
+import get from require "lapis.config"
+
+admin_key = get!["admin_key"]
+
+
 json_capture_erros = (fn) ->
     capture_errors {
         on_error: =>
             { json: @errors }
         fn
     }
+
+check_admin = (fn) ->
+    json_capture_erros =>
+        token = @req.headers["x-access-token"]
+        if token != admin_key
+            yield_error "forbidden"
+        fn @            
 
 post_method = (fn) -> 
     json_params respond_to {
@@ -41,8 +53,6 @@ extract_token = (fn) ->
             yield_error err
         @user = user
         fn @
-    
-
 
 {
     :post_method
@@ -50,5 +60,6 @@ extract_token = (fn) ->
     :delete_method
     :put_method
 
+    :check_admin
     :extract_token
 }
